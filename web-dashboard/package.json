@@ -1,0 +1,11 @@
+{
+  "name": "career-ops-web-dashboard",
+  "version": "1.0.0",
+  "description": "User-friendly Web Dashboard for Career-Ops and LinkedIn Jobs Radar",
+  "type": "module",
+  "main": "server.mjs",
+  "scripts": {
+    "start": "node server.mjs",
+    "dev": "node server.mjs"
+  }
+}

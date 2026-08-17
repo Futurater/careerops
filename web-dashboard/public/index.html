@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CareerOps — Premium Job Radar &amp; AI Pipeline</title>
+  <meta name="description" content="Clean, distraction-free job search pipeline and portal radar for Sagar and Nehalika">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Ambient background lighting -->
+  <div class="glow-bg"></div>
+
+  <div class="app-layout">
+    <!-- Clean Minimalist Header -->
+    <header class="top-nav">
+      <div class="nav-left">
+        <div class="app-logo">
+          <div class="logo-mark">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <div class="logo-info">
+            <span class="logo-title">CareerOps</span>
+            <span class="status-indicator"><span class="dot"></span>Live Radar</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Segmented Profile Switcher -->
+      <div class="nav-center">
+        <div class="segmented-control">
+          <button id="tab-sagar" class="segment-btn active" onclick="switchUser('sagar')">
+            <span class="user-avatar">S</span>
+            <span class="user-name">Sagar Varma</span>
+            <span class="user-sub">B.E. CSE</span>
+          </button>
+          <button id="tab-nehalika" class="segment-btn" onclick="switchUser('nehalika')">
+            <span class="user-avatar avatar-nehalika">N</span>
+            <span class="user-name">Nadikatla Nehalika</span>
+            <span class="user-sub">B.E. AIML (8.94)</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Action Buttons -->
+      <div class="nav-right">
+        <button id="btn-scan" class="action-btn primary" onclick="triggerScan()">
+          <svg id="scan-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+          </svg>
+          <span id="scan-text">Run ATS Scan</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Compact Stats Ribbon -->
+    <div class="stats-ribbon">
+      <div class="ribbon-item">
+        <span class="ribbon-label">Filtered Matches</span>
+        <span class="ribbon-val text-primary" id="stat-active-matches">58 Jobs</span>
+      </div>
+      <div class="ribbon-sep"></div>
+      <div class="ribbon-item">
+        <span class="ribbon-label">ATS Scanned</span>
+        <span class="ribbon-val">5,971 Total</span>
+      </div>
+      <div class="ribbon-sep"></div>
+      <div class="ribbon-item">
+        <span class="ribbon-label">Primary Location</span>
+        <span class="ribbon-val">Bengaluru &amp; Remote</span>
+      </div>
+      <div class="ribbon-sep"></div>
+      <div class="ribbon-item">
+        <span class="ribbon-label">Target Roles</span>
+        <span class="ribbon-val">SDE / MERN / Full Stack</span>
+      </div>
+      <div class="ribbon-sep"></div>
+      <div class="ribbon-item">
+        <span class="ribbon-label">Compensation</span>
+        <span class="ribbon-val text-emerald">Paid Internships</span>
+      </div>
+    </div>
+
+    <!-- Deadline Checker — Scan your pipeline for closing postings -->
+    <div class="smart-search-section">
+      <div class="smart-search-bar">
+        <div class="smart-search-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+        </div>
+        <span style="font-size: 0.88rem; color: var(--text-muted); font-weight: 500; flex: 1;">Are any of my job postings or internships closing today?</span>
+        <button class="action-btn primary sm" id="deadline-check-btn" onclick="runDeadlineCheck()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          Check Deadlines
+        </button>
+      </div>
+      <div id="deadline-results" class="smart-search-results"></div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs">
+      <button class="nav-tab active" onclick="switchView('pipeline')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+        ATS Pipeline (<span id="tab-count-pipeline">58</span>)
+      </button>
+      <button class="nav-tab" onclick="switchView('portals')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+        Job Portals (LinkedIn, Unstop, Internshala, Wellfound, Indeed)
+      </button>
+      <button class="nav-tab" onclick="switchView('evaluator')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+        AI Fit Evaluator
+      </button>
+      <button class="nav-tab" onclick="switchView('tracker')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+        Applications (<span id="tab-count-tracker">0</span>)
+      </button>
+      <button class="nav-tab" onclick="switchView('profile')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        Profile &amp; Skills
+      </button>
+    </nav>
+
+    <!-- TAB 1: ATS PIPELINE JOBS -->
+    <main id="view-pipeline" class="tab-pane active">
+      <!-- Search & Filters -->
+      <div class="control-bar">
+        <div class="search-box">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" id="pipeline-search" placeholder="Search by role, company (e.g. React, Glean, Celonis, Bangalore)..." oninput="renderPipeline()">
+        </div>
+
+        <!-- Filter by Tech & Location -->
+        <div class="filter-group">
+          <button class="filter-pill active" onclick="setFilter('all', this)">All Roles</button>
+          <button class="filter-pill" onclick="setFilter('bengaluru', this)">📍 Bengaluru</button>
+          <button class="filter-pill" onclick="setFilter('remote', this)">🌐 Remote</button>
+          <button class="filter-pill" onclick="setFilter('intern', this)">🎓 Internships</button>
+          <button class="filter-pill" onclick="setFilter('fullstack', this)">⚡ Full Stack / MERN</button>
+          <button class="filter-pill" onclick="setFilter('backend', this)">⚙️ Java / Node / Backend</button>
+          <button class="filter-pill" onclick="setFilter('ai', this)">🤖 AI / ML</button>
+        </div>
+      </div>
+
+      <!-- Clean Job Grid -->
+      <div id="job-cards-container" class="cards-grid">
+        <!-- Injected via JS -->
+      </div>
+    </main>
+
+    <!-- TAB 2: MULTI-PORTAL RADAR -->
+    <main id="view-portals" class="tab-pane">
+      <div class="portal-header-bar">
+        <div>
+          <h2>Targeted Job Portals for <span id="portal-user-name" class="highlight-text">Sagar</span></h2>
+          <p class="section-desc">1-click launchpads with pre-configured search keywords for Bengaluru, Remote, and Fresher roles.</p>
+        </div>
+
+        <!-- Custom Search Box -->
+        <div class="portal-search-wrap">
+          <select id="custom-search-portal" class="portal-select">
+            <option value="linkedin">LinkedIn</option>
+            <option value="unstop">Unstop</option>
+            <option value="internshala">Internshala</option>
+            <option value="wellfound">Wellfound</option>
+            <option value="indeed">Indeed</option>
+          </select>
+          <input type="text" id="custom-portal-query" placeholder="Type keyword (e.g. React, SDE, Node)...">
+          <button class="action-btn primary sm" onclick="launchCustomPortalSearch()">Search ↗</button>
+        </div>
+      </div>
+
+      <div class="filter-group mb-4">
+        <button class="filter-pill active" onclick="setRadarPortalFilter('all', this)">All Platforms</button>
+        <button class="filter-pill" onclick="setRadarPortalFilter('LinkedIn', this)">💼 LinkedIn</button>
+        <button class="filter-pill" onclick="setRadarPortalFilter('Unstop', this)">🏆 Unstop</button>
+        <button class="filter-pill" onclick="setRadarPortalFilter('Internshala', this)">🎓 Internshala</button>
+        <button class="filter-pill" onclick="setRadarPortalFilter('Wellfound', this)">🚀 Wellfound</button>
+        <button class="filter-pill" onclick="setRadarPortalFilter('Indeed', this)">🔍 Indeed</button>
+      </div>
+
+      <div class="portal-grid" id="portal-queries-container">
+        <!-- Injected via JS -->
+      </div>
+    </main>
+
+    <!-- TAB 3: AI FIT EVALUATOR -->
+    <main id="view-evaluator" class="tab-pane">
+      <div class="eval-layout">
+        <div class="panel-card">
+          <div class="panel-header">
+            <h3>⚡ Evaluate Job Match</h3>
+            <p class="section-desc">Paste any job description to get instant compatibility score and tailored resume bullet points.</p>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">Job Title / Company</label>
+            <input type="text" id="eval-title" class="field-input" placeholder="e.g. Software Development Engineer Intern at Glean">
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">Job Description / Requirements</label>
+            <textarea id="eval-text" class="field-textarea" rows="7" placeholder="Paste the job requirements, qualifications, or tech stack here..."></textarea>
+          </div>
+
+          <button class="action-btn primary full" onclick="runEvaluation()">Run AI Fit Analysis</button>
+        </div>
+
+        <div class="panel-card" id="eval-result-box">
+          <div class="empty-state">
+            <div class="empty-icon">🎯</div>
+            <h4>Ready to Analyze</h4>
+            <p>Paste a job description on the left to evaluate match compatibility against the active profile.</p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- TAB 4: APPLICATIONS TRACKER -->
+    <main id="view-tracker" class="tab-pane">
+      <div class="panel-card">
+        <div class="panel-header">
+          <h3>Applications Tracker</h3>
+          <p class="section-desc">Track all your submitted applications and interview stages.</p>
+        </div>
+
+        <div class="table-container">
+          <table class="clean-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Date</th>
+                <th>Company</th>
+                <th>Role</th>
+                <th>Fit Score</th>
+                <th>Status</th>
+                <th>PDF CV</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody id="tracker-table-body">
+              <tr>
+                <td colspan="8" class="empty-cell">No applications tracked yet. Click "Match Fit" on any job in the pipeline to get started.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+
+    <!-- TAB 5: CANDIDATE PROFILE -->
+    <main id="view-profile" class="tab-pane">
+      <div class="panel-card" id="profile-details-container">
+        <!-- Injected via JS -->
+      </div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
