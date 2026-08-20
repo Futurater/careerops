@@ -578,6 +578,7 @@ const server = http.createServer((req, res) => {
   });
 });
 
-server.listen(PORT, () => {
-  console.log(`🚀 Career-Ops Web Dashboard running at http://localhost:${PORT}`);
+const HOST = '0.0.0.0';
+server.listen(PORT, HOST, () => {
+  console.log(`🚀 Career-Ops Web Dashboard running on http://${HOST}:${PORT}`);
 });
