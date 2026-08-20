@@ -1,8 +1,8 @@
-import http from 'node:http';
-import fs from 'node:fs';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-import { exec } from 'node:child_process';
+import http from 'http';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { exec } from 'child_process';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -598,6 +598,11 @@ const server = http.createServer((req, res) => {
 });
 
 const HOST = '0.0.0.0';
-server.listen(PORT, HOST, () => {
-  console.log(`🚀 Career-Ops Web Dashboard running on http://${HOST}:${PORT}`);
-});
+try {
+  server.listen(PORT, HOST, () => {
+    console.log(`🚀 Career-Ops Web Dashboard running on http://${HOST}:${PORT}`);
+  });
+} catch (err) {
+  console.error('[FATAL] Failed to start server:', err.message);
+  process.exit(1);
+}

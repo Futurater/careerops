@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "CareerOps Web Dashboard & Pipeline",
   "type": "module",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "start": "node web-dashboard/server.mjs"
   }
