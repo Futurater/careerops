@@ -10,6 +10,18 @@ const ROOT_DIR = path.resolve(__dirname, '..');
 
 const PORT = parseInt(process.env.PORT || '3000', 10);
 
+// Prevent silent crashes on Render
+process.on('uncaughtException', (err) => {
+  console.error('[CRASH] uncaughtException:', err.message, err.stack);
+});
+process.on('unhandledRejection', (reason) => {
+  console.error('[CRASH] unhandledRejection:', reason);
+});
+
+console.log(`[STARTUP] __dirname=${__dirname}`);
+console.log(`[STARTUP] ROOT_DIR=${ROOT_DIR}`);
+console.log(`[STARTUP] PORT=${PORT}`);
+
 // Helper to parse YAML-like profile minimally or safely
 function parseSimpleYaml(content) {
   const lines = content.split('\n');
@@ -477,6 +489,13 @@ const server = http.createServer((req, res) => {
   if (req.method === 'OPTIONS') {
     res.writeHead(204);
     res.end();
+    return;
+  }
+
+  // Health check for Render
+  if (pathname === '/health' || pathname === '/ping') {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('OK');
     return;
   }
   
