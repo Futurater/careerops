@@ -1,0 +1,9 @@
+{
+  "name": "careerops",
+  "version": "1.0.0",
+  "description": "CareerOps Web Dashboard & Pipeline",
+  "type": "module",
+  "scripts": {
+    "start": "node web-dashboard/server.mjs"
+  }
+}
