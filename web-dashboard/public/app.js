@@ -178,6 +178,7 @@ function renderPipeline() {
 function getSourceBadgeClass(source = '') {
   const s = source.toLowerCase();
   if (s.includes('linkedin')) return 'linkedin';
+  if (s.includes('ycombinator') || s.includes('yc') || s.includes('workatastartup')) return 'ycombinator';
   if (s.includes('wellfound')) return 'wellfound';
   if (s.includes('unstop')) return 'unstop';
   if (s.includes('internshala')) return 'internshala';
@@ -190,7 +191,12 @@ function renderPortalRadar() {
   const container = document.getElementById('portal-queries-container');
   const filtered = portalQueries.filter(q => {
     if (currentPortalFilter === 'all') return true;
-    return q.portal.toLowerCase() === currentPortalFilter.toLowerCase();
+    const filterLower = currentPortalFilter.toLowerCase();
+    const portalLower = q.portal.toLowerCase();
+    if (filterLower === 'y combinator') {
+      return portalLower.includes('combinator') || portalLower.includes('yc');
+    }
+    return portalLower === filterLower;
   });
 
   container.innerHTML = filtered.map(q => {
@@ -260,6 +266,8 @@ function launchCustomPortalSearch() {
 
   if (portal === 'linkedin') {
     url = `https://www.linkedin.com/jobs/search/?keywords=${encodeURIComponent(q)}&location=Bengaluru%2C%20Karnataka%2C%20India&f_TPR=r604800&sortBy=DD`;
+  } else if (portal === 'ycombinator') {
+    url = `https://www.workatastartup.com/jobs?query=${encodeURIComponent(q)}`;
   } else if (portal === 'unstop') {
     url = `https://unstop.com/internships?search=${encodeURIComponent(q)}`;
   } else if (portal === 'internshala') {

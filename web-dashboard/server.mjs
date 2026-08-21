@@ -75,6 +75,7 @@ function parsePipeline(user = 'sagar') {
         else if (url.includes('workday')) provider = 'Workday';
         else if (url.includes('smartrecruiters')) provider = 'SmartRecruiters';
         else if (url.includes('rippling')) provider = 'Rippling';
+        else if (url.includes('ycombinator.com') || url.includes('workatastartup.com')) provider = 'Y Combinator';
 
         const lowerRole = role.toLowerCase();
         
@@ -192,9 +193,43 @@ function getProfiles() {
   return profiles;
 }
 
-// Curated Multi-Portal Search Queries (LinkedIn, Unstop, Internshala, Indeed, Wellfound)
+// Curated Multi-Portal Search Queries (LinkedIn, Y Combinator, Unstop, Internshala, Indeed, Wellfound)
 function getRadarPortals() {
   return [
+    // Y Combinator / Work at a Startup
+    {
+      portal: 'Y Combinator',
+      logo: 'ycombinator',
+      title: 'YC Work at a Startup — Software Engineer Internships',
+      role: 'Software Engineer Intern / Early-Career',
+      location: 'Bengaluru / Remote / Global',
+      badge: 'YC • Work at a Startup',
+      color: '#ff6600',
+      freshness: 'Direct Founders Hiring',
+      url: 'https://www.workatastartup.com/jobs?roles=software_engineer&demographic=intern'
+    },
+    {
+      portal: 'Y Combinator',
+      logo: 'ycombinator',
+      title: 'YC High-Growth Startups — Full Stack & AI Engineers',
+      role: 'Full Stack / AI Engineer (India / Remote)',
+      location: 'India / Remote',
+      badge: 'YC • Top Seed & Series A',
+      color: '#ff6600',
+      freshness: 'Actively Hiring',
+      url: 'https://www.workatastartup.com/jobs?query=Full%20Stack&locations=Remote&locations=India'
+    },
+    {
+      portal: 'Y Combinator',
+      logo: 'ycombinator',
+      title: 'Y Combinator Official Jobs Board — Tech Roles',
+      role: 'Software Engineer / Full Stack Developer',
+      location: 'Bengaluru / Remote Worldwide',
+      badge: 'Y Combinator • Direct Board',
+      color: '#ff6600',
+      freshness: 'Updated Daily',
+      url: 'https://www.ycombinator.com/jobs/role/software-engineer'
+    },
     // LinkedIn
     {
       portal: 'LinkedIn',
@@ -459,6 +494,13 @@ function checkDeadlines(user = 'sagar') {
       icon: '🚀',
       url: 'https://wellfound.com/jobs?role=software-engineer&location=India&types=internship',
       tip: 'Startup roles fill fast — apply immediately'
+    },
+    {
+      platform: 'Y Combinator (Work at a Startup)',
+      label: 'YC Startup internships & entry-level roles',
+      icon: '🟠',
+      url: 'https://www.workatastartup.com/jobs?roles=software_engineer&demographic=intern',
+      tip: 'Direct access to YC founders — early applicants get interviewed first'
     }
   ];
 
